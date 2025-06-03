@@ -8,6 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 AUTH_USER_MODEL = 'user.User'
 
+
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 
@@ -30,6 +31,7 @@ INSTALLED_APPS = [
     'product',
     'meal',
     'inventory',
+    'ingredient',
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -61,6 +63,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'crm.wsgi.application'
 
 
+LOGIN_URL = '/login/'
 
 DATABASES = {
     'default': {

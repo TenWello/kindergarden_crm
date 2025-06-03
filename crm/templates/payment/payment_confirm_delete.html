@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block main %}
+<div class="container">
+    <h2>Kassani o‘chirish</h2>
+    <p>Haqiqatan ham kassani o‘chirmoqchimisiz?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Ha, o‘chirish</button>
+        <a href="{% url 'payment_list' %}" class="btn btn-secondary">Yo‘q, bekor qilish</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block main %}
+<div class="container">
+    <h2>Kassaga pul qo‘shish</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label>Miqdor (so‘m):</label>
+            <input type="number" name="amount" class="form-control" min="1" required>
+        </div>
+        <button type="submit" class="btn btn-success">Qo‘shish</button>
+        <a href="{% url 'payment_detail' payment.id %}" class="btn btn-secondary">Ortga</a>
+    </form>
+</div>
+{% endblock %}

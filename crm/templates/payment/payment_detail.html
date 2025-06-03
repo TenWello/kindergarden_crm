@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block main %}
+<div class="container">
+    <h2>Kassa tafsiloti</h2>
+    <p><b>ID:</b> {{ payment.id }}</p>
+    <p><b>Jami pul:</b> {{ payment.total_money|floatformat:0 }} so‘m</p>
+    <p><b>Oyliklar:</b> {{ payment.total_salary|floatformat:0 }}</p>
+    <p><b>Mahsulot uchun ketgan:</b> {{ payment.total_product_price|floatformat:0 }}</p>
+    <p><b>Foyda:</b> {{ payment.total_benefit|floatformat:0 }}</p>
+    <a href="{% url 'add_money' payment.id %}" class="btn btn-success">Kassaga pul qo‘shish</a>
+    <a href="{% url 'payment_update' payment.id %}" class="btn btn-primary">Tahrirlash</a>
+    <a href="{% url 'payment_list' %}" class="btn btn-secondary">Ortga</a>
+</div>
+{% endblock %}

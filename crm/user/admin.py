@@ -1,17 +1,24 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import User
 
-
-@admin.register(User)
-class CustomUserAdmin(admin.ModelAdmin):
-    list_display = ('username', 'full_name', 'email', 'role', 'status', 'created_at')
-    list_filter = ('role', 'status', 'created_at')
-    search_fields = ('username', 'full_name', 'email')
-    readonly_fields = ('created_at', 'updated_at')
-
+class UserAdmin(BaseUserAdmin):
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
-        ('Personal Info', {'fields': ('full_name', 'email')}),
-        ('Status', {'fields': ('role', 'status')}),
-        ('Important dates', {'fields': ('created_at', 'updated_at')}),
+        ('Personal info', {'fields': ('full_name', 'email')}),
+        ('Permissions', {'fields': ('role', 'status', 'is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
+        ('Important dates', {'fields': ('last_login',)}),
     )
+    readonly_fields = ('created_at', 'updated_at')
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('username', 'full_name', 'email', 'password1', 'password2', 'role', 'status', 'is_active', 'is_staff', 'is_superuser')}
+        ),
+    )
+    list_display = ('username', 'full_name', 'email', 'role', 'status', 'is_active')
+    search_fields = ('username', 'full_name', 'email')
+    ordering = ('username',)
+    filter_horizontal = ('groups', 'user_permissions',)
+
+admin.site.register(User, UserAdmin)

@@ -1,20 +1,20 @@
-from django.db import models
+# payment/models.py
 
-from crm.inventory.models import Inventory
-from crm.user.models import User
+from django.db import models
+from .inventory.models import Inventory
+from .user.models import User
 
 
 class Payment(models.Model):
-    total_money = models.BigIntegerField(null=True, blank=True, default=0)
-    total_salary = models.BigIntegerField(null=True, blank=True, default=0)
-    total_product_price = models.BigIntegerField(null=True, blank=True, default=0)
-    user_id = models.ManyToManyField(User, related_name='payments_user')
-    inventory_id = models.ManyToManyField(Inventory, related_name='payments_inventory')
+    total_money = models.BigIntegerField(null=True, blank=True, default=0, verbose_name='Kassadagi jami pul')
+    total_salary = models.BigIntegerField(null=True, blank=True, default=0, verbose_name='Jami oyliklar')
+    total_product_price = models.BigIntegerField(null=True, blank=True, default=0,
+                                                 verbose_name='Sotib olingan mahsulotlarga ketgan pul')
+    users = models.ManyToManyField(User, related_name='payments_user', verbose_name='Ishchilar')
+    inventories = models.ManyToManyField(Inventory, related_name='payments_inventory', verbose_name='Inventarlar')
+    total_benefit = models.BigIntegerField(null=True, blank=True, default=0, verbose_name='Jami foyda')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    generated_at = models.DateTimeField(auto_now_add=True)
-    total_benefit = models.BigIntegerField(null=True, blank=True, default=0)
 
     def __str__(self):
-        return self.total_money
-
+        return f"Kassa: {self.total_money:,} so'm"

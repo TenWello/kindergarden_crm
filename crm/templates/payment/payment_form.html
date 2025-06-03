@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block main %}
+<div class="container">
+    <h2>{% if type == 'edit' %}Kassani tahrirlash{% else %}Yangi kassa{% endif %}</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">{% if type == 'edit' %}Saqlash{% else %}Qo‘shish{% endif %}</button>
+        <a href="{% url 'payment_list' %}" class="btn btn-secondary">Ortga</a>
+    </form>
+</div>
+{% endblock %}

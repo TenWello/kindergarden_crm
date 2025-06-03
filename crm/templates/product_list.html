@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block title %}
+  <h1>Mahsulotlar boshqaruvi</h1>
+{% endblock title %}
+
+{% block main %}
+<div class="container">
+  <!-- Qo‘shish tugmasi -->
+  <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addModal">
+    + Mahsulot qo‘shish
+  </button>
+  <!-- Mahsulotlar ro‘yxati -->
+  <table class="table table-bordered table-striped">
+      <thead>
+          <tr>
+              <th>#</th>
+              <th>Nomi</th>
+              <th>Kategoriya</th>
+              <th>Miqdori</th>
+              <th>Jami narx</th>
+              <th>Yetkazilgan sana</th>
+              <th>Muddati (gacha)</th>
+              <th>Harakat</th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for product in products %}
+          <tr>
+              <td>{{ forloop.counter }}</td>
+              <td>{{ product.name }}</td>
+              <td>{{ product.category_id }}</td>
+              <td>{{ product.quantity }}</td>
+              <td>{{ product.total_cost }}</td>
+              <td>{{ product.delivered_date }}</td>
+              <td>{{ product.best_before }}</td>
+              <td>
+                  <!-- Edit button -->
+                  <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                          data-bs-target="#editModal{{ product.id }}">Tahrirlash</button>
+                  <!-- Delete button -->
+                  <form action="{% url 'product_delete' product.id %}" method="post" style="display:inline;">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-danger btn-sm"
+                        onclick="return confirm('O‘chirishni tasdiqlang!')">
+                        O‘chirish
+                      </button>
+                  </form>
+              </td>
+          </tr>
+          <!-- Edit Modal -->
+          <div class="modal fade" id="editModal{{ product.id }}" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <form method="post" action="{% url 'product_update' product.id %}">
+                  {% csrf_token %}
+                  <div class="modal-header">
+                    <h5 class="modal-title">Mahsulotni tahrirlash</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                  </div>
+                  <div class="modal-body">
+                    {% with edit_forms|get_item:product.id as edit_form %}
+                        {{ edit_form.as_p }}
+                    {% endwith %}
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Saqlash</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+      </tbody>
+  </table>
+
+  <!-- Add Modal -->
+  <div class="modal fade" id="addModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form method="post" action="{% url 'product_create' %}">
+          {% csrf_token %}
+          <div class="modal-header">
+            <h5 class="modal-title">Mahsulot qo‘shish</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            {{ add_form.as_p }}
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Qo‘shish</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock main %}

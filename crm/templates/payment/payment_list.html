@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block main %}
+<div class="container">
+    <h2>Kassalar ro‘yxati</h2>
+    <a href="{% url 'payment_create' %}" class="btn btn-success mb-2">+ Yangi kassa</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Jami pul</th>
+                <th>Jami oylik</th>
+                <th>Mahsulot uchun</th>
+                <th>Foyda</th>
+                <th>Harakatlar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for payment in payments %}
+            <tr>
+                <td>{{ payment.id }}</td>
+                <td>{{ payment.total_money|floatformat:0 }}</td>
+                <td>{{ payment.total_salary|floatformat:0 }}</td>
+                <td>{{ payment.total_product_price|floatformat:0 }}</td>
+                <td>{{ payment.total_benefit|floatformat:0 }}</td>
+                <td>
+                    <a href="{% url 'payment_detail' payment.id %}" class="btn btn-primary btn-sm">Ko‘rish</a>
+                    <a href="{% url 'payment_update' payment.id %}" class="btn btn-info btn-sm">Tahrirlash</a>
+                    <form action="{% url 'payment_delete' payment.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('O‘chirasizmi?')">O‘chirish</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

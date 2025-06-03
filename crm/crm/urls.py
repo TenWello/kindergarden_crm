@@ -1,8 +1,15 @@
 from django.contrib import admin
-from django.urls import path
+from django.shortcuts import render
+from django.urls import path, include
 from main.views import index
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),
+path('products/', include('product.urls')),
+path('payments/', include('payment.urls')),
+
+    path('ingredients/', include('ingredient.urls')),
+    path('forbidden/', lambda request: render(request, 'forbidden.html'), name='forbidden'),
+path('', include('user.urls')),
 ]
