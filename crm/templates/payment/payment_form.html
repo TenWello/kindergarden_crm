@@ -1,12 +1,71 @@
 {% extends 'base.html' %}
 {% block main %}
 <div class="container">
-    <h2>{% if type == 'edit' %}Kassani tahrirlash{% else %}Yangi kassa{% endif %}</h2>
-    <form method="post">
+    <h2>Kassa qo‘shish yoki tahrirlash</h2>
+    <form method="post" id="payment-form">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-success">{% if type == 'edit' %}Saqlash{% else %}Qo‘shish{% endif %}</button>
+        <div class="mb-3">
+            {{ form.total_money.label_tag }}{{ form.total_money }}
+        </div>
+        <div class="mb-3">
+            {{ form.users.label_tag }}
+            {% for user in form.users.field.queryset %}
+                <div>
+                    <label>
+                        <input type="checkbox" name="users" value="{{ user.id }}" data-salary="{{ user.salary|default:0 }}" class="user-checkbox">
+                        {{ user.username }} (oyligi: <b class="salary">{{ user.salary|default:0 }}</b> so‘m)
+                    </label>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="mb-3">
+            <label>Jami oylik:</label>
+            <input type="number" id="id_total_salary" name="total_salary" readonly class="form-control" value="{{ form.initial.total_salary|default:0 }}">
+        </div>
+        <div class="mb-3">
+            {{ form.inventories.label_tag }}
+            {% for inventory in form.inventories.field.queryset %}
+                <div>
+                    <label>
+                        <input type="checkbox" name="inventories" value="{{ inventory.id }}" data-price="{{ inventory.product.unit_price|floatformat:2|default:0 }}" class="inventory-checkbox">
+                        {{ inventory.product.name }} (narxi: <b class="price">{{ inventory.product.unit_price|floatformat:2|default:0 }}</b> so‘m)
+                    </label>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="mb-3">
+            <label>Jami mahsulot narxi:</label>
+            <input type="number" id="id_total_product_price" name="total_product_price" readonly class="form-control" value="{{ form.initial.total_product_price|default:0 }}">
+        </div>
+        <div class="mb-3">
+            {{ form.total_benefit.label_tag }}{{ form.total_benefit }}
+        </div>
+        <button type="submit" class="btn btn-success">Saqlash</button>
         <a href="{% url 'payment_list' %}" class="btn btn-secondary">Ortga</a>
     </form>
 </div>
+
+<script>
+// Jami oylikni avtomatik hisoblash
+document.querySelectorAll('.user-checkbox').forEach(function(chk) {
+    chk.addEventListener('change', function() {
+        let sum = 0;
+        document.querySelectorAll('.user-checkbox:checked').forEach(function(selected) {
+            sum += parseInt(selected.getAttribute('data-salary') || 0);
+        });
+        document.getElementById('id_total_salary').value = sum;
+    });
+});
+
+// Jami mahsulot narxini avtomatik hisoblash (bir dona narxlarni jamlaydi)
+document.querySelectorAll('.inventory-checkbox').forEach(function(chk) {
+    chk.addEventListener('change', function() {
+        let sum = 0;
+        document.querySelectorAll('.inventory-checkbox:checked').forEach(function(selected) {
+            sum += parseFloat(selected.getAttribute('data-price') || 0);
+        });
+        document.getElementById('id_total_product_price').value = sum.toFixed(2);
+    });
+});
+</script>
 {% endblock %}

@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'meal',
     'inventory',
     'ingredient',
+    'payment',
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

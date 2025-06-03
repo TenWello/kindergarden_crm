@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Kindergarten Meal Service</title>
+    <title>Kindergarten Meal Service </title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -218,25 +218,30 @@
                             <p>Product</p>
                         </a>
                     </li>
-                    {% comment %}
+
                     <li class="nav-item">
-                        <a href="{% url 'ingredient' %}" class="nav-link">
+                        <a href="{% url 'payment_list' %}" class="nav-link">
                             <i class="bi bi-basket"></i>
-                            <p>Ingredient</p>
+                            <p>Capital $</p>
                         </a>
                     </li><li class="nav-item">
-                        <a href="{% url 'meal' %}" class="nav-link">
+
+                        <a href="{% url 'category_list' %}" class="nav-link">
                             <i class="bi bi-cup-straw"></i>
+                            <p>Category</p>
+                        </a>
+                    </li>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{% url 'meal_list' %}" class="nav-link">
+                            <i class="bi bi-fork-knife"></i>
                             <p>Meal</p>
                         </a>
                     </li>
-                    </li><li class="nav-item">
-                        <a href="{% url 'serve' %}" class="nav-link">
-                            <i class="bi bi-fork-knife"></i>
-                            <p>Serve</p>
-                        </a>
                     </li>
-                    </li><li class="nav-item">
+                    {% comment %}
+                    <li class="nav-item">
                         <a href="{% url 'notification' %}" class="nav-link">
                             <i class="bi bi-bell-fill"></i>
                             <p>Notification</p>

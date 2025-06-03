@@ -54,7 +54,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     password = models.CharField(max_length=128)
     role = models.PositiveSmallIntegerField(choices=ROLE_TYPE, default=ROLE_CHEF)
     status = models.PositiveSmallIntegerField(choices=STATUS_TYPE, default=1)
-
+    salary = models.BigIntegerField(default=0, verbose_name='Oylik', null=True, blank=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 

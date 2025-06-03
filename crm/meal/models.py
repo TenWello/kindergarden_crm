@@ -1,14 +1,12 @@
 from django.db import models
 from product.models import Product
 
-
 class Meal(models.Model):
-    products = models.ManyToManyField(Product)
     food_name = models.CharField(max_length=100)
-    portion = models.DateTimeField(auto_now_add=True)
+    products = models.ManyToManyField(Product, related_name='meals', blank=True)  # ixtiyoriy
+    portion = models.PositiveIntegerField(default=1, verbose_name="Porsiya soni")
     cooking_time = models.DurationField(null=True, blank=True)
     recipe = models.TextField(null=True, blank=True)
-    ingredient = models.TextField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

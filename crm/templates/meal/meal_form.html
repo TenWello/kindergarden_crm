@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block main %}
+<div class="container">
+    <h2>
+        {% if form.instance.pk %} Ovqatni tahrirlash
+        {% else %} Ovqat qo‘shish {% endif %}
+    </h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">
+        {% if form.instance.pk %} Saqlash {% else %} Qo‘shish {% endif %}
+    </button>
+    <a href="{% url 'meal_list' %}" class="btn btn-secondary">Ortga</a>
+</form>
+
+</div>
+{% endblock %}

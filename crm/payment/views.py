@@ -16,22 +16,27 @@ def payment_create(request):
     if request.method == "POST":
         form = PaymentForm(request.POST)
         if form.is_valid():
-            form.save()
+            payment = form.save(commit=False)
+            # total_salary va total_product_price POST orqali keldi, JS hisoblab berdi
+            payment.save()
+            form.save_m2m()
             return redirect('payment_list')
     else:
         form = PaymentForm()
-    return render(request, 'payment/payment_form.html', {'form': form, 'type': 'create'})
+    return render(request, 'payment/payment_form.html', {'form': form})
 
 def payment_update(request, pk):
     payment = get_object_or_404(Payment, pk=pk)
     if request.method == "POST":
         form = PaymentForm(request.POST, instance=payment)
         if form.is_valid():
-            form.save()
+            payment = form.save(commit=False)
+            payment.save()
+            form.save_m2m()
             return redirect('payment_list')
     else:
         form = PaymentForm(instance=payment)
-    return render(request, 'payment/payment_form.html', {'form': form, 'type': 'edit'})
+    return render(request, 'payment/payment_form.html', {'form': form})
 
 def payment_delete(request, pk):
     payment = get_object_or_404(Payment, pk=pk)

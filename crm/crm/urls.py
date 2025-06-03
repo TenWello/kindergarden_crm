@@ -8,7 +8,8 @@ urlpatterns = [
     path('', index, name='index'),
 path('products/', include('product.urls')),
 path('payments/', include('payment.urls')),
-
+path('category/', include('category.urls')),
+    path('meals/', include('meal.urls')),
     path('ingredients/', include('ingredient.urls')),
     path('forbidden/', lambda request: render(request, 'forbidden.html'), name='forbidden'),
 path('', include('user.urls')),

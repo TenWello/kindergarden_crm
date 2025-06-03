@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block main %}
+<div class="container">
+    <h2>Ovqatlar ro‘yxati</h2>
+    <a href="{% url 'meal_create' %}" class="btn btn-success mb-3">+ Ovqat qo‘shish</a>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nomi</th>
+                <th>Mahsulotlar</th>
+                <th>Portsiya vaqti</th>
+                <th>Pishirish vaqti</th>
+                <th>Retsept</th>
+                <th>Ingredient</th>
+                <th>Izoh</th>
+                <th>Harakat</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for meal in meals %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ meal.food_name }}</td>
+                <td>
+                    {% for product in meal.products.all %}
+                        <span class="badge bg-info">{{ product.name }}</span>{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
+                <td>{{ meal.portion }}</td>
+                <td>{{ meal.cooking_time }}</td>
+                <td>{{ meal.recipe|truncatewords:10 }}</td>
+                <td>{{ meal.ingredient|truncatewords:8 }}</td>
+                <td>{{ meal.description|truncatewords:6 }}</td>
+                <td>
+                    <a href="{% url 'meal_update' meal.id %}" class="btn btn-primary btn-sm">Tahrirlash</a>
+                    <form action="{% url 'meal_delete' meal.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('O‘chirasizmi?')">O‘chirish</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

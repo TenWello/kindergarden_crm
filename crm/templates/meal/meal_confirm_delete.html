@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block main %}
+<div class="container">
+    <h2>Ovqatni o‘chirish</h2>
+    <p>Rostdan ham <b>{{ meal.food_name }}</b> ni o‘chirmoqchimisiz?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Ha, o‘chirish</button>
+        <a href="{% url 'meal_list' %}" class="btn btn-secondary">Yo‘q, bekor qilish</a>
+    </form>
+</div>
+{% endblock %}
