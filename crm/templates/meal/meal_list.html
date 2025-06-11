@@ -30,7 +30,12 @@
                 <td>{{ meal.portion }}</td>
                 <td>{{ meal.cooking_time }}</td>
                 <td>{{ meal.recipe|truncatewords:10 }}</td>
-                <td>{{ meal.ingredient|truncatewords:8 }}</td>
+                <td>
+    {% for ingredient in meal.ingredients.all %}
+        <span class="badge bg-success">{{ ingredient.name }}</span>{% if not forloop.last %}, {% endif %}
+    {% endfor %}
+</td>
+
                 <td>{{ meal.description|truncatewords:6 }}</td>
                 <td>
                     <a href="{% url 'meal_update' meal.id %}" class="btn btn-primary btn-sm">Tahrirlash</a>

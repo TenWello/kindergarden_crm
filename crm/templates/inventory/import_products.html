@@ -1,0 +1,17 @@
+<!-- inventory/import_products.html -->
+{% extends 'base.html' %}
+{% block main %}
+<h2>Productlarni Inventoryga Import qilish</h2>
+<form method="post">
+    {% csrf_token %}
+    {% for product in products %}
+        <div>
+            <label>
+                <input type="checkbox" name="products" value="{{ product.id }}">
+                {{ product.name }}
+            </label>
+        </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-success">Import qilish</button>
+</form>
+{% endblock %}

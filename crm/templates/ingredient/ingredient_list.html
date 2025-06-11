@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block main %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between mb-3">
+        <h2>Ingredientlar</h2>
+        <a href="{% url 'ingredient_add' %}" class="btn btn-success">
+            <i class="fas fa-plus"></i> Yangi ingredient qo‘shish
+        </a>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nomi</th>
+                <th>Miqdor (g)</th>
+                <th>Saqlash muddati</th>
+                <th>Amallar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ing in ingredients %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ ing.name }}</td>
+                <td>{{ ing.quantity }}</td>
+                <td>{{ ing.expiration_date }}</td>
+
+                                <td>
+    <a href="{% url 'ingredient_edit' ing.id %}" class="btn btn-warning btn-sm">Tahrirlash</a>
+    <a href="{% url 'ingredient_delete' ing.id %}" class="btn btn-danger btn-sm"
+       onclick="return confirm('O‘chirasizmi?');">O‘chirish</a>
+</td>
+            </tr>
+            {% empty %}
+
+            <tr>
+                <td colspan="5">Ingredientlar yo‘q</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block main %}
+<div class="container mt-4">
+    <h2>Inventory — Ingredientlar ro‘yxati</h2>
+    <a href="{% url 'inventory_list' %}" class="btn btn-info mb-3">Productlar ro‘yxati</a>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nomi</th>
+                <th>Miqdori</th>
+                <th>Keltirilgan sana</th>
+                <th>Izoh</th>
+                <th>Amallar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for inv in inventories %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ inv.ingredient.name }}</td>
+                <td>{{ inv.quantity }}</td>
+                <td>{{ inv.delivery_at }}</td>
+                <td>{{ inv.note }}</td>
+                <td>
+                    <a href="{% url 'inventory_edit' inv.id %}" class="btn btn-warning btn-sm">Tahrirlash</a>
+                    <form action="{% url 'inventory_delete' inv.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('O‘chirasizmi?')">O‘chirish</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6">Ingredientlar mavjud emas.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,7 +1,7 @@
-from django import forms
+from django.contrib import admin
 from .models import Ingredient
 
-class IngredientForm(forms.ModelForm):
-    class Meta:
-        model = Ingredient
-        fields = ['meal', 'product', 'quantity_per_portion']
+@admin.register(Ingredient)
+class IngredientAdmin(admin.ModelAdmin):
+    list_display = ['name', 'quantity', 'expiration_date']
+    search_fields = ['name']

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block main %}
+<div class="container">
+    <h2>Inventarni o‘chirish</h2>
+    <p>"{{ inventory.name }}" inventarni o‘chirishni istaysizmi?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Ha, o‘chirish</button>
+        <a href="{% url 'inventory_list' %}" class="btn btn-secondary">Bekor qilish</a>
+    </form>
+</div>
+{% endblock %}
