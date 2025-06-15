@@ -8,7 +8,7 @@
             <tr>
                 <th>#</th>
                 <th>Nomi</th>
-                <th>Miqdori</th>
+                <th>Miqdori(kg)</th>
                 <th>Keltirilgan sana</th>
                 <th>Izoh</th>
                 <th>Amallar</th>
@@ -19,7 +19,7 @@
             <tr>
                 <td>{{ forloop.counter }}</td>
                 <td>{{ inv.product.name }}</td>
-                <td>{{ inv.quantity }}</td>
+                <td>{{ inv.product.quantity }} </td>
                 <td>{{ inv.delivery_at }}</td>
                 <td>{{ inv.note }}</td>
                 <td>
@@ -36,4 +36,13 @@
         </tbody>
     </table>
 </div>
+    <script>
+  const invSocket = new WebSocket(
+    'ws://' + window.location.host + '/ws/inventory/'
+  );
+  invSocket.onmessage = function(e) {
+    window.location.reload();
+  };
+</script>
+
 {% endblock %}

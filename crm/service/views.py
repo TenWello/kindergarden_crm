@@ -20,6 +20,7 @@ def serve_meal(request):
         form = ServiceForm()
     return render(request, 'service/serve_meal.html', {'form': form})
 
+
 def recent_services(request):
     date_from = timezone.now() - timedelta(days=10)
     recent = Service.objects.filter(served_at__gte=date_from).order_by('-served_at')

@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% block main %}
-<div class="container">
-    <h2>Ovqatni berish</h2>
+<div class="container mt-4">
+    <h2>Ovqatni topshirish</h2>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button class="btn btn-success" type="submit">Berish</button>
+        <button type="submit" class="btn btn-success">Ovqatni berish</button>
     </form>
     {% if messages %}
         {% for message in messages %}

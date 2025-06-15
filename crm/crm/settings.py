@@ -17,6 +17,8 @@ ALLOWED_HOSTS = ['*']
 
 
 
+ASGI_APPLICATION = 'crm.asgi.application'
+
 
 INSTALLED_APPS = [
     'jazzmin',
@@ -34,6 +36,7 @@ INSTALLED_APPS = [
     'ingredient',
     'payment',
     'service',
+    'channels',
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -64,6 +67,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'crm.wsgi.application'
 
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    },
+}
 
 LOGIN_URL = '/login/'
 
