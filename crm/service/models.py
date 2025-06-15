@@ -4,7 +4,12 @@ from user.models import User
 
 class Service(models.Model):
     meal = models.ForeignKey(Meal, on_delete=models.SET_NULL, null=True)
-    served_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, limit_choices_to={'role': 'chef'})  # faqat oshpazlar
+    served_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        limit_choices_to={'role__in': [User.ROLE_CHEF, User.ROLE_ADMIN]}
+    )
     portion_count = models.IntegerField(default=0)
     served_at = models.DateTimeField(auto_now_add=True)
     created_at = models.DateTimeField(auto_now_add=True)

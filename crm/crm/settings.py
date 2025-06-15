@@ -17,7 +17,7 @@ ALLOWED_HOSTS = ['*']
 
 
 
-ASGI_APPLICATION = 'crm.asgi.application'
+
 
 
 INSTALLED_APPS = [
@@ -32,11 +32,13 @@ INSTALLED_APPS = [
     'category',
     'product',
     'meal',
-    'inventory',
+    # 'inventory',
     'ingredient',
     'payment',
+
     'service',
     'channels',
+    'inventory.apps.InventoryConfig',
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -66,7 +68,9 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'crm.wsgi.application'
+ASGI_APPLICATION = "crm.asgi.application"
 
+# In-memory channel layer for development
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels.layers.InMemoryChannelLayer",

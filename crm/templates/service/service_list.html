@@ -1,32 +1,48 @@
 {% extends 'base.html' %}
 {% block main %}
 <div class="container">
-    <h2>Tayyor ovqatlar ro‘yxati</h2>
-    <a href="{% url 'serve_meal' %}" class="btn btn-success mb-3">Ovqatni berish</a>
-    <a href="{% url 'recent_services' %}" class="btn btn-primary mb-3">So‘nggi 10 kunda topshirilgan ovqatlar</a>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Ovqat</th>
-                <th>Oshpaz</th>
-                <th>Porsiya soni</th>
-                <th>Topshirildi vaqti</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for service in services %}
-            <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>{{ service.meal }}</td>
-                <td>{{ service.served_by }}</td>
-                <td>{{ service.portion_count }}</td>
-                <td>{{ service.served_at|date:"Y-m-d H:i" }}</td>
-            </tr>
-            {% empty %}
-            <tr><td colspan="5">Hozircha ma'lumot yo‘q</td></tr>
-            {% endfor %}
-        </tbody>
-    </table>
+
+  <h2>Oldin topshirilgan ovqatlar</h2>
+  <table class="table table-bordered mb-5">
+    <thead>
+      <tr>
+        <th>#</th><th>Ovqat</th><th>Oshpaz</th>
+        <th>Porsiya</th><th>Vaqti</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for service in services %}
+      <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ service.meal.food_name }}</td>
+        <td>{{ service.served_by.username }}</td>
+        <td>{{ service.portion_count }}</td>
+        <td>{{ service.served_at|date:"Y-m-d H:i" }}</td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="5">Hozircha ma'lumot yo‘q</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+<h2>Berilishi mumkin bo‘lgan ovqatlar</h2>
+<div class="card">
+  <ul class="list-group list-group-flush">
+    {% for meal in meals %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        {{ meal.food_name }} — {{ meal.portion }} Portsiya
+
+{#           {{ meal.serving_size }} g  yoki  {{ meal.portion_size }} g #}
+        <a href="{% url 'service:serve_meal' %}?meal={{ meal.id }}"
+           class="btn btn-sm btn-success">
+          Berish
+        </a>
+      </li>
+    {% empty %}
+      <li class="list-group-item">Hech qanday taom mavjud emas.</li>
+    {% endfor %}
+  </ul>
+</div>
+
 </div>
 {% endblock %}

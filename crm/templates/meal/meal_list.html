@@ -9,7 +9,7 @@
                 <th>#</th>
                 <th>Nomi</th>
                 <th>Mahsulotlar</th>
-                <th>Portsiya vaqti</th>
+                <th>Portsiya soni</th>
                 <th>Pishirish vaqti</th>
                 <th>Retsept</th>
                 <th>Ingredient</th>
@@ -27,7 +27,7 @@
                         <span class="badge bg-info">{{ product.name }}</span>{% if not forloop.last %}, {% endif %}
                     {% endfor %}
                 </td>
-                <td>{{ meal.portion }}</td>
+                <td>{{ meal.portion }} ta</td>
                 <td>{{ meal.cooking_time }}</td>
                 <td>{{ meal.recipe|truncatewords:10 }}</td>
                 <td>

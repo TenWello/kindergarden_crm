@@ -1,12 +1,15 @@
 import os
+from django.core.asgi import get_asgi_application
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.auth import AuthMiddlewareStack
-from django.core.asgi import get_asgi_application
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "crm.settings")
 django_asgi_app = get_asgi_application()
 
-import inventory.routing  # we’ll create this
+# Debug print to ensure this file is loaded
+print("🛠  ASGI application starting…")
+
+import inventory.routing  # point to your app's routing
 
 application = ProtocolTypeRouter({
     "http": django_asgi_app,

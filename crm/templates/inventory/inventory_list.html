@@ -2,7 +2,11 @@
 {% block main %}
 <div class="container mt-4">
     <h2>Inventory — Productlar ro‘yxati</h2>
-    <a href="{% url 'ingredient_list' %}" class="btn btn-info mb-3">Ingredientlar ro‘yxati</a>
+    <a href="{% url 'ingredient_list' %}"
+   class="btn btn-info mb-3">
+  Ingredientlar ro‘yxati
+</a>
+
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -19,7 +23,7 @@
             <tr>
                 <td>{{ forloop.counter }}</td>
                 <td>{{ inv.product.name }}</td>
-                <td>{{ inv.product.quantity }} </td>
+                <td>{{ inv.product.quantity }} {{ inv.product.unit }} </td>
                 <td>{{ inv.delivery_at }}</td>
                 <td>{{ inv.note }}</td>
                 <td>

@@ -30,7 +30,7 @@ def inventory_list(request):
 
 def ingredient_list(request):
     ingredients = Ingredient.objects.all()
-    return render(request, 'ingredient/ingredient_list.html', {'ingredients': ingredients})
+    return render(request, 'inventory/ingredient_list.html', {'ingredients': ingredients})
 def inventory_add_product(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     if request.method == 'POST':

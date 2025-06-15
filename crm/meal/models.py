@@ -9,6 +9,7 @@ class Meal(models.Model):
     # ingredient/models.py ni import QILMAY, shunday yozing:
     ingredients = models.ManyToManyField('ingredient.Ingredient', related_name='meals', blank=True, verbose_name="Ingredientlar")
     portion = models.PositiveIntegerField(default=1, verbose_name="Porsiya soni")
+    available_portions = models.IntegerField(default=0, help_text="Mavjud porsiyalar soni")
     cooking_time = models.DurationField(null=True, blank=True)
     recipe = models.TextField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
