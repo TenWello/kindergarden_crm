@@ -24,14 +24,13 @@ class Report(models.Model):
         return self.reported_month
 
     def save(self, *args, **kwargs):
-        # total_money = total_expense + money_left
         total_money = (self.total_expense or 0) + (self.money_left or 0)
 
         if self.total_benefit > total_money:
-            self.total_benefit_or_damage = 1  # Benefit
+            self.total_benefit_or_damage = 1
         elif self.total_benefit < total_money:
-            self.total_benefit_or_damage = 2  # Damage
+            self.total_benefit_or_damage = 2
         else:
-            self.total_benefit_or_damage = 3  # Did not Change
+            self.total_benefit_or_damage = 3
 
         super().save(*args, **kwargs)

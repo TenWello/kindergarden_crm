@@ -9,7 +9,7 @@ django_asgi_app = get_asgi_application()
 # Debug print to ensure this file is loaded
 print("🛠  ASGI application starting…")
 
-import inventory.routing  # point to your app's routing
+import inventory.routing
 
 application = ProtocolTypeRouter({
     "http": django_asgi_app,

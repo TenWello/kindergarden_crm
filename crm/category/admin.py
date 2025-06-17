@@ -13,4 +13,4 @@ class CategoryAdmin(admin.ModelAdmin):
             return f'<img src="{obj.image.url}" style="height:40px;">'
         return ''
     category_image.short_description = 'Rasm'
-    category_image.allow_tags = True  # Django 3+ uchun bu kerak emas, avtomatik html qiladi
+    category_image.allow_tags = True

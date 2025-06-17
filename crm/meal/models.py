@@ -6,7 +6,6 @@ from product.models import Product
 class Meal(models.Model):
     food_name = models.CharField(max_length=100)
     products = models.ManyToManyField(Product, related_name='meals', blank=True)  # eski mahsulot
-    # ingredient/models.py ni import QILMAY, shunday yozing:
     ingredients = models.ManyToManyField('ingredient.Ingredient', related_name='meals', blank=True, verbose_name="Ingredientlar")
     portion = models.PositiveIntegerField(default=1, verbose_name="Porsiya soni")
     available_portions = models.IntegerField(default=0, help_text="Mavjud porsiyalar soni")

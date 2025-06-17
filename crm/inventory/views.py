@@ -11,7 +11,6 @@ def import_products_to_inventory(request):
         product_ids = request.POST.getlist('products')
         for pid in product_ids:
             product = Product.objects.get(id=pid)
-            # Agar product allaqachon inventoryda bo'lsa, o'tkazib yuboramiz
             if not Inventory.objects.filter(product=product).exists():
                 Inventory.objects.create(
                     name=product.name,
@@ -21,7 +20,7 @@ def import_products_to_inventory(request):
     products = Product.objects.all()
     return render(request, 'inventory/import_products.html', {'products': products})
 def inventory_list(request):
-    products = Product.objects.all()  # Barcha productlarni olamiz
+    products = Product.objects.all()
     inventories = Inventory.objects.all()
     return render(request, 'inventory/inventory_list.html', {
         'products': products,
@@ -38,7 +37,7 @@ def inventory_add_product(request, product_id):
         if form.is_valid():
             inv = form.save(commit=False)
             inv.product = product
-            inv.name = product.name  # avtomatik nomini oladi
+            inv.name = product.name
             inv.save()
             return redirect('inventory_list')
     else:

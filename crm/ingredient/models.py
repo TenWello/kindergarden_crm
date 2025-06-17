@@ -4,7 +4,6 @@ from meal.models import Meal
 from product.models import Product
 import datetime
 
-# ingredient/models.py
 class Ingredient(models.Model):
     name = models.CharField(max_length=100, verbose_name="Nomi")
     quantity = models.PositiveIntegerField(verbose_name="Miqdor (gramm)")

@@ -5,4 +5,4 @@ from .models import Meal
 class MealAdmin(admin.ModelAdmin):
     list_display = ('food_name', 'portion', 'cooking_time', 'created_at', 'updated_at')
     search_fields = ('food_name', 'description', 'recipe')
-    filter_horizontal = ('products',)  # <-- Faqat mavjud ManyToManyField! (ingredients ni olib tashlang)
+    filter_horizontal = ('products',)

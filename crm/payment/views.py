@@ -17,7 +17,6 @@ def payment_create(request):
         form = PaymentForm(request.POST)
         if form.is_valid():
             payment = form.save(commit=False)
-            # total_salary va total_product_price POST orqali keldi, JS hisoblab berdi
             payment.save()
             form.save_m2m()
             return redirect('payment_list')
@@ -45,7 +44,6 @@ def payment_delete(request, pk):
         return redirect('payment_list')
     return render(request, 'payment/payment_confirm_delete.html', {'payment': payment})
 
-# Tez pul qo‘shish uchun alohida view:
 def add_money(request, pk):
     payment = get_object_or_404(Payment, pk=pk)
     if request.method == "POST":
