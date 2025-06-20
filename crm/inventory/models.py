@@ -1,4 +1,3 @@
-
 from django.db import models
 from product.models import Product
 from ingredient.models import Ingredient

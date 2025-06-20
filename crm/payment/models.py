@@ -1,5 +1,3 @@
-# payment/models.py
-
 from django.db import models
 from inventory.models import Inventory
 from user.models import User

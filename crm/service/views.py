@@ -19,7 +19,6 @@ def serve_meal(request):
     initial = {}
     if meal_id:
         meal = get_object_or_404(Meal, pk=meal_id)
-        # oldindan portion_count maydoniga mavjud porsiyalardan qiymat o‘tkazamiz
         initial = {
             'meal': meal,
             'portion_count': meal.available_portions
@@ -40,7 +39,7 @@ def serve_meal(request):
 
     return render(request, 'service/serve_meal.html', {
         'form': form,
-        'meal': Meal.objects.filter(pk=meal_id).first()  # ixtiyoriy, template’da ko‘rsatish uchun
+        'meal': Meal.objects.filter(pk=meal_id).first()
     })
 
 

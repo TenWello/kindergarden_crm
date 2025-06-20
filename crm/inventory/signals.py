@@ -15,7 +15,6 @@ def broadcast(msg):
         {"type": "inventory_update", "message": msg}
     )
 
-# Inventory row changed
 @receiver(post_save, sender=Inventory)
 def inv_saved(sender, instance, created, **kwargs):
     action = "created" if created else "updated"
@@ -25,14 +24,12 @@ def inv_saved(sender, instance, created, **kwargs):
 def inv_deleted(sender, instance, **kwargs):
     broadcast(f"Inventory deleted: {instance.name}")
 
-# New products → import into inventory
 @receiver(post_save, sender=Product)
 def prod_saved(sender, instance, created, **kwargs):
     if created:
         Inventory.objects.create(name=instance.name, product=instance, quantity=instance.quantity or 0)
         broadcast(f"New product: {instance.name}")
 
-# Ingredient changes (optional)
 @receiver(post_save, sender=Ingredient)
 def ing_saved(sender, instance, created, **kwargs):
     broadcast(f"Ingredient {'added' if created else 'updated'}: {instance.name}")
