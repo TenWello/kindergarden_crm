@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.utils import timezone
 from datetime import timedelta
 from meal.models import Meal
+from django.contrib.admin.views.decorators import staff_member_required
 
 def service_list(request):
     services = Service.objects.select_related('meal','served_by').order_by('-served_at')
@@ -51,4 +52,20 @@ def recent_services(request):
                             .order_by('-served_at')
     return render(request, 'service/recent_services.html', {
         'recent': recent
+    })
+def service_detail(request, pk):
+    service = get_object_or_404(Service.objects.select_related('meal','served_by'), pk=pk)
+    return render(request, 'service/service_detail.html', {
+        'service': service
+    })
+
+@staff_member_required
+def service_delete(request, pk):
+    service = get_object_or_404(Service, pk=pk)
+    if request.method == 'POST':
+        service.delete()
+        messages.success(request, "Service yozuvi o‘chirildi.")
+        return redirect('service:service_list')
+    return render(request, 'service/service_confirm_delete.html', {
+        'service': service
     })

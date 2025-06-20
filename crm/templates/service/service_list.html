@@ -1,38 +1,13 @@
 {% extends 'base.html' %}
 {% block main %}
-<div class="container">
-
-  <h2>Oldin topshirilgan ovqatlar</h2>
-  <table class="table table-bordered mb-5">
-    <thead>
-      <tr>
-        <th>#</th><th>Ovqat</th><th>Oshpaz</th>
-        <th>Porsiya</th><th>Vaqti</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for service in services %}
-      <tr>
-        <td>{{ forloop.counter }}</td>
-        <td>{{ service.meal.food_name }}</td>
-        <td>{{ service.served_by.username }}</td>
-        <td>{{ service.portion_count }}</td>
-        <td>{{ service.served_at|date:"Y-m-d H:i" }}</td>
-      </tr>
-      {% empty %}
-      <tr><td colspan="5">Hozircha ma'lumot yo‘q</td></tr>
-      {% endfor %}
-    </tbody>
-  </table>
-
 <h2>Berilishi mumkin bo‘lgan ovqatlar</h2>
 <div class="card">
   <ul class="list-group list-group-flush">
     {% for meal in meals %}
       <li class="list-group-item d-flex justify-content-between align-items-center">
-        {{ meal.food_name }} — {{ meal.portion }} Portsiya
+        {{ meal.food_name }} — {{ meal.available_portions }} Portsiya
 
-{#           {{ meal.serving_size }} g  yoki  {{ meal.portion_size }} g #}
+<!--{#           {{ meal.serving_size }} g  yoki  {{ meal.portion_size }} g #}-->
         <a href="{% url 'service:serve_meal' %}?meal={{ meal.id }}"
            class="btn btn-sm btn-success">
           Berish
@@ -43,6 +18,45 @@
     {% endfor %}
   </ul>
 </div>
+
+<div class="container">
+  <h2>Oldin topshirilgan ovqatlar</h2>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>#</th><th>Ovqat</th><th>Oshpaz</th>
+      <th>Porsiya</th><th>Vaqti</th><th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for s in services %}
+    <tr>
+      <td>{{ forloop.counter }}</td>
+      <td>{{ s.meal.food_name }}</td>
+      <td>{{ s.served_by.username }}</td>
+      <td>{{ s.portion_count }}</td>
+      <td>{{ s.served_at|date:"Y-m-d H:i" }}</td>
+      <td class="d-flex">
+        <a href="{% url 'service:service_detail' s.pk %}"
+           class="btn btn-sm btn-info me-1">Ko‘rish</a>
+        {% if request.user.is_staff %}
+        <form action="{% url 'service:service_delete' s.pk %}"
+              method="post" style="display:inline;">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-sm btn-danger"
+                  onclick="return confirm('Haqiqatan ham o‘chirmoqchimisiz?')">
+            O‘chirish
+          </button>
+        </form>
+        {% endif %}
+      </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="6">Ma’lumot yo‘q</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+
 
 </div>
 {% endblock %}

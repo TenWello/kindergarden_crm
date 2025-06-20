@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block main %}
+<div class="container mt-4">
+  <h2>Hisobotlar ro‘yxati</h2>
+  <a href="{% url 'report:generate_report' current_year current_month %}"
+     class="btn btn-primary mb-3">
+    Joriy oy uchun hisobot yarat
+  </a>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Oy</th>
+        <th>Yaratildi</th>
+        <th>Actions</th>   <!-- bu satrni qo‘shing -->
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in reports %}
+      <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ r.reported_month|date:"Y-m" }}</td>
+        <td>{{ r.generated_at|date:"Y-m-d H:i" }}</td>
+        <td class="d-flex">
+          <a href="{% url 'report:report_detail' r.pk %}"
+             class="btn btn-sm btn-info me-2">Ko‘rish</a>
+
+          {% if user.is_staff %}
+          <form action="{% url 'report:report_delete' r.pk %}"
+                method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit"
+                    class="btn btn-sm btn-danger"
+                    onclick="return confirm('Haqiqatan o‘chirilsinmi?');">
+              O‘chirish
+            </button>
+          </form>
+          {% endif %}
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="4">Hali hisobot mavjud emas.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

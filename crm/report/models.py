@@ -1,5 +1,5 @@
 from django.db import models
-from crm.payment.models import Payment
+from payment.models import Payment
 
 class Report(models.Model):
     TOTAL_REPORT = [

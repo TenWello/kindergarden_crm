@@ -6,13 +6,16 @@ from main.views import index
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),
-path('products/', include('product.urls')),
-path('payments/', include('payment.urls')),
-path('category/', include('category.urls')),
+    path('products/', include('product.urls')),
+    path('payments/', include('payment.urls')),
+    path('category/', include('category.urls')),
     path('meals/', include('meal.urls')),
     path('ingredients/', include('ingredient.urls')),
     path('inventory/', include('inventory.urls')),
     path('service/', include(('service.urls', 'service'), namespace='service')),
     path('forbidden/', lambda request: render(request, 'forbidden.html'), name='forbidden'),
-path('', include('user.urls')),
+    path('', include('user.urls')),
+    path('reports/', include(('report.urls', 'report'), namespace='report')),
+path('', include(('dashboard.urls', 'dashboard'), namespace='dashboard')),
+
 ]

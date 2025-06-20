@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block main %}
+<div class="container">
+  <h2>Service yozuvini o‘chirish</h2>
+  <p>Quyidagi service yozuvini o‘chirilsinmi?</p>
+  <ul>
+    <li><strong>Ovqat:</strong> {{ service.meal.name }}</li>
+    <li><strong>Porsiya:</strong> {{ service.portion_count }}</li>
+    <li><strong>Vaqti:</strong> {{ service.served_at|date:"Y-m-d H:i" }}</li>
+  </ul>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Ha, o‘chirilsin</button>
+    <a href="{% url 'service:service_list' %}" class="btn btn-secondary">Bekor</a>
+  </form>
+</div>
+{% endblock %}

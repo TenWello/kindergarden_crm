@@ -35,10 +35,10 @@ INSTALLED_APPS = [
     # 'inventory',
     'ingredient',
     'payment',
-
     'service',
     'channels',
     'inventory.apps.InventoryConfig',
+    'report',
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

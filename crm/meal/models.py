@@ -15,6 +15,8 @@ class Meal(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
-        return self.food_name
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.available_portions = self.portion
+        super().save(*args, **kwargs)
 

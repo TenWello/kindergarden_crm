@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block main %}
+<div class="container">
+  <h2>Service #{{ service.pk }} tafsilotlari</h2>
+  <ul class="list-group">
+    <li class="list-group-item"><strong>Ovqat:</strong> {{ service.meal.name }}</li>
+    <li class="list-group-item"><strong>Oshpaz:</strong> {{ service.served_by.username }}</li>
+    <li class="list-group-item"><strong>Porsiya:</strong> {{ service.portion_count }}</li>
+    <li class="list-group-item"><strong>Vaqti:</strong> {{ service.served_at|date:"Y-m-d H:i" }}</li>
+  </ul>
+  <a href="{% url 'service:service_list' %}" class="btn btn-secondary mt-3">Orqaga</a>
+</div>
+{% endblock %}

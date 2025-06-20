@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block main %}
+<div class="container mt-4">
+  <h2>Hisobotni o‘chirish</h2>
+  <p>“{{ report.reported_month|date:"Y-m" }}” hisobotini butunlay o‘chirilsinmi?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Ha, o‘chirilsin</button>
+    <a href="{% url 'report:report_list' %}" class="btn btn-secondary">Bekor</a>
+  </form>
+</div>
+{% endblock %}

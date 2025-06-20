@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block main %}
+<div class="container mt-4">
+  <h2>{{ report.reported_month|date:"Y-m" }} hisobot</h2>
+
+  <ul class="list-group mb-4">
+    <li class="list-group-item"><strong>Xarajatlar (Jami kassa):</strong> {{ report.total_expense }}</li>
+    <li class="list-group-item"><strong>Qoldiq pul:</strong> {{ report.money_left }}</li>
+    <li class="list-group-item"><strong>Umumiy mahsulot:</strong> {{ report.total_product }}</li>
+    <li class="list-group-item"><strong>Chiqgan mahsulot:</strong> {{ report.product_went_out }}</li>
+    <li class="list-group-item"><strong>Qolgan mahsulot:</strong> {{ report.left_product }}</li>
+    <li class="list-group-item"><strong>Foyda/Zarar:</strong> {{ report.total_benefit }}</li>
+  </ul>
+
+  <a href="{% url 'report:report_list' %}" class="btn btn-secondary">Orqaga</a>
+
+  {% if user.is_staff %}
+  <a href="{% url 'report:report_delete' report.pk %}"
+     class="btn btn-danger float-end">
+    O‘chirish
+  </a>
+  {% endif %}
+</div>
+{% endblock %}
